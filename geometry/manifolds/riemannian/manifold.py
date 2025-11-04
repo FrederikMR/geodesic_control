@@ -117,3 +117,16 @@ class RiemannianManifold(ABC):
             
         return jnp.trapezoid(integrand, dx=dt)
     
+    def indicatrix(self,
+                   z:Array,
+                   N_points:int=100,
+                   *args,
+                   )->Array:
+        
+        theta = jnp.linspace(0.,2*jnp.pi,N_points)
+        u = jnp.vstack((jnp.cos(theta), jnp.sin(theta))).T
+        G = self.G(z)
+        norm = jnp.einsum('...i,ij,...j->...',u,G,u)
+        
+        return jnp.einsum('ij,i->ij', u, 1./norm)
+    

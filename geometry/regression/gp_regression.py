@@ -121,6 +121,26 @@ class GPRegression(ABC):
              
         return -pYX
     
+    def logp(self, 
+             x:Array,
+             )->Array:
+        
+        kernel_params = self.kernel_params[:-1]
+        sigma2 = self.sigma2
+        y, _ = self.post_mom(x)
+        N = len(x)
+        
+
+        K11 = self.kernel_matrix(x.T, x.T, lambda x,y: self.k_fun(x,y,kernel_params))+sigma2*jnp.eye(N)+jnp.eye(N)*self.delta
+
+        if self.N_obs == 1:
+            pYX = -0.5*(y.dot(jnp.linalg.solve(K11, y))+jnp.log(jnp.linalg.det(K11))+N*jnp.log(2.0*jnp.pi))
+        else:
+            pYX = vmap(lambda y: (self.y_training.dot(jnp.linalg.solve(K11, y))+jnp.log(jnp.linalg.det(K11))+N*jnp.log(2.0*jnp.pi)))(y)
+            pYX = -0.5*jnp.sum(pYX)
+             
+        return -pYX
+    
     def Dlog_ml(self, theta:Array)->Array:
         
         #K11 = self.kernel_matrix(self.X_training.T, self.X_training.T, lambda x,y: self.k_fun(x,y,theta))+self.sigma2*jnp.eye(self.N_training)

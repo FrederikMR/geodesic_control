@@ -93,3 +93,16 @@ class FinslerManifold(ABC):
             
         return jnp.trapezoid(integrand, dx=dt)
     
+    def indicatrix(self,
+                   z:Array,
+                   N_points:int=100,
+                   *args,
+                   )->Array:
+        
+        theta = jnp.linspace(0.,2*jnp.pi,N_points)
+        u = jnp.vstack((jnp.cos(theta), jnp.sin(theta))).T
+        
+        norm = vmap(self.F, in_axes=(None, 0))(z,u)
+        
+        return jnp.einsum('ij,i->ij', u, 1./norm)
+    

@@ -11,3 +11,4 @@ from .manifold import FinslerManifold
 from .gp_finsler import GPFinsler
 from .randers import RandersManifold
 from .riemannian_navigation import RiemannianNavigation
+from .elliptic_finsler import EllipticFinsler

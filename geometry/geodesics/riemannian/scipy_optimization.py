@@ -35,6 +35,8 @@ class ScipyOptimization(ABC):
                                                                    T,
                                                                    endpoint=False,
                                                                    dtype=z0.dtype)[1:].reshape(-1,1)+z0
+        else:
+            self.init_fun = init_fun
             
         self.M = M
         self.T = T
