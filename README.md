@@ -51,4 +51,14 @@ If you want to clone this repository and use GEORCE to compute geodesics for you
 
 If you want to use GEORCE for scientific purposes, please cite:
 
+    @misc{rygaard2025georcefastnewcontrol,
+          title={GEORCE: A Fast New Control Algorithm for Computing Geodesics}, 
+          author={Frederik Möbius Rygaard and Søren Hauberg},
+          year={2025},
+          eprint={2505.05961},
+          archivePrefix={arXiv},
+          primaryClass={math.DG},
+          url={https://arxiv.org/abs/2505.05961}, 
+    }
+
 
